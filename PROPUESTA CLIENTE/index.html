@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propuesta de Servicio: Tu Éxito en Instagram con Reels Dinámicos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ECF0F1; /* Light Grey from Brilliant Blues palette */
+            color: #2C3E50; /* Dark Blue from Brilliant Blues palette */
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            overflow-x: hidden; /* Prevent horizontal scroll due to potential animation issues */
+        }
+        html {
+            font-size: 16px; /* Base font size */
+        }
+        
+        @media (max-width: 640px) {
+            html {
+                font-size: 14px; /* Smaller base font on mobile */
+            }
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white for glassmorphism */
+            border-radius: 16px; /* Slightly more rounded */
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); /* Stronger, more glass-like shadow */
+            backdrop-filter: blur(12px); /* Blur effect */
+            -webkit-backdrop-filter: blur(12px); /* For Safari */
+            border: 1px solid rgba(255, 255, 255, 0.18); /* Light border */
+            padding: 30px;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-out forwards; /* Fade-in animation */
+            opacity: 0; /* Start invisible for animation */
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #3498DB; /* Vibrant Blue from Brilliant Blues palette */
+            text-align: center;
+            margin-bottom: 40px;
+            line-height: 1.1;
+        }
+        h1[style] {
+            font-size: clamp(1.75rem, 5vw, 2.5rem) !important; /* Responsive font size */
+            padding: 15px 10px !important; /* Adjust padding for small screens */
+            margin-bottom: 20px !important; /* Smaller margin on small screens */
+        }
+        h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #2C3E50; /* Dark Blue from Brilliant Blues palette */
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        h2 {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            margin-bottom: 20px;
+        }
+        h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #34495E; /* Slightly lighter dark blue */
+            margin-bottom: 15px;
+        }
+        h3 {
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+        }
+        p {
+            color: #4A5568; /* Adjusting paragraph color for better contrast on glass */
+            margin-bottom: 1rem; /* Asegurar espaciado consistente */
+        }
+        .section-intro {
+            font-size: 1.1rem;
+            margin-bottom: 2rem; /* Aumentar espacio después de introducciones */
+            text-align: center;
+            max-width: 90%; /* Evitar que ocupe todo el ancho en móviles */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .kpi-box {
+            background-color: rgba(235, 248, 255, 0.7); /* Lighter transparent blue for KPIs */
+            border-left: 5px solid #3498DB;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .kpi-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+        .kpi-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #3498DB;
+            line-height: 1;
+        }
+        .kpi-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2C3E50;
+            margin-top: 5px;
+        }
+        /* Responsive chart container */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px; /* Maximum width on large screens */
+            margin-left: auto;
+            margin-right: auto;
+            /* Responsive heights */
+            height: 320px; /* Default height for mobile */
+            margin-top: 1rem; /* Espacio adicional arriba */
+            padding-bottom: 1rem; /* Espacio adicional abajo */
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .chart-container {
+                height: 350px;
+            }
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .chart-container {
+                height: 380px;
+            }
+        }
+        @media (min-width: 1024px) { /* lg breakpoint */
+            .chart-container {
+                height: 420px;
+            }
+        }
+        .flow-step {
+            background-color: rgba(248, 248, 248, 0.7); /* Transparent background for flow steps */
+            border: 1px solid rgba(220, 220, 220, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            height: 100%; /* Altura consistente */
+        }
+        .flow-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .flow-arrow {
+            color: #3498DB;
+            font-size: 2.5rem;
+            margin: 15px 0;
+            animation: bounceArrow 1.5s infinite ease-in-out;
+        }
+        @keyframes bounceArrow {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(10px); }
+        }
+        .flow-text {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #2C3E50;
+        }
+        .footer-info {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px dashed rgba(226, 232, 240, 0.5);
+            color: #718096;
+            font-size: 0.9rem;
+        }
+        /* Corregir problemas de espaciado y alineación */
+        .grid {
+            align-items: start; /* Alinear elementos al inicio para evitar problemas */
+        }
+        /* Ajustar contenedores de gráficos */
+        .chart-container {
+            margin-top: 1rem; /* Espacio adicional arriba */
+            padding-bottom: 1rem; /* Espacio adicional abajo */
+        }
+        /* Corregir espaciado en secciones de texto */
+        .card > div {
+            margin-bottom: 1.5rem;
+        }
+        /* Mejorar espaciado de elementos de lista */
+        li.mb-2 {
+            margin-bottom: 0.75rem !important;
+        }
+        /* Asegurar que los h3 tengan espacio adecuado */
+        h3 {
+            margin-top: 1rem;
+        }
+        /* Mejoras para responsividad completa */
+        
+        /* Ajustes para gráficas en dispositivos pequeños */
+        @media (max-width: 640px) {
+            .chart-container {
+                height: 300px;
+            }
+        }
+        
+        /* Mejor espaciado en secciones responsivas */
+        .section-intro {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            max-width: 100%;
+            padding: 0 10px;
+        }
+        
+        /* Ajustes para elementos de lista en móviles */
+        @media (max-width: 640px) {
+            ul.list-disc {
+                padding-left: 1rem;
+            }
+            
+            li.mb-2 {
+                margin-bottom: 0.5rem !important;
+            }
+        }
+        
+        /* Ajustes para el bloque de precio en móviles */
+        @media (max-width: 640px) {
+            .bg-blue-50.p-6 {
+                padding: 1rem;
+            }
+            
+            .text-5xl {
+                font-size: 2.5rem;
+            }
+        }
+        
+        /* Mejora para el footer en dispositivos pequeños */
+        .footer-info {
+            margin-top: clamp(25px, 5vw, 50px);
+            padding-top: 10px;
+            border-top: 1px dashed rgba(226, 232, 240, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <!-- Colour Palette Used: "Brilliant Blues" (#2C3E50, #3498DB, #ECF0F1, #34495E) -->
+    <!-- Plan Narrative & Structure:
+        1. Title: Propuesta de Servicio: Tu Éxito en Instagram con Reels Dinámicos
+        2. Section 1: ¡Impulsa tu Marca con Reels de Impacto! (Introduction/Hook, KPIs)
+           - Data Point: 15 Reels Semanales -> Goal: Inform -> Chosen Visualization: Single Big Number -> Justification: Immediate impact, clearly convey key quantity.
+           - Data Point: 60 Reels al Mes -> Goal: Inform -> Chosen Visualization: Single Big Number -> Justification: Reinforce volume, monthly commitment.
+        3. Section 2: Nuestro Compromiso de Calidad (Service Details, Donut Chart for value distribution)
+           - Data Point: Distribution of service aspects (e.g., editing, trends, music) -> Goal: Compare (composition) -> Chosen Visualization: Donut Chart -> Justification: Show proportions of different service components, easy to grasp relative importance.
+        4. Section 3: Tu Inversión, Tu Retorno (Pricing breakdown, Bar Chart for price comparison)
+           - Data Point: Standard price vs. Discounted price per reel -> Goal: Compare (categories) -> Chosen Visualization: Bar Chart -> Justification: Directly compare two values, highlight the benefit of the discounted rate.
+        5. Section 4: Tu Proceso, Nuestra Alianza (Collaboration Flowchart)
+           - Data Point: Workflow steps -> Goal: Organize (process) -> Chosen Visualization: Flow Chart (HTML/CSS) -> Justification: Visually guide through the collaboration process, clear sequential steps.
+        6. Section 5: Hablemos del Futuro (Next Steps & Terms)
+        7. Conclusion: Call to action
+    -->
+    <!-- NEITHER Mermaid JS NOR SVG were used anywhere in the output. -->
+
+    <div class="container">
+        <h1 style="
+    color: #833AB4; 
+    background: linear-gradient(90deg, #833AB4, #FD1D1D, #FCAF45); 
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 2.5rem; 
+    text-align: center; 
+    padding: 20px 0; 
+    margin-bottom: 30px; 
+    font-weight: 700; 
+    letter-spacing: -0.5px; 
+    border-bottom: 2px solid #E1306C; 
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">
+    Propuesta de Servicio: Tu Éxito en Instagram con Reels Dinámicos
+</h1>
+
+        <!-- Section 1: ¡Impulsa tu Marca con Reels de Impacto! -->
+        <div class="card">
+            <h2>¡Impulsa tu Marca con Reels de Impacto!</h2>
+            <p class="section-intro">
+                En la era digital, los Reels de Instagram son la clave para captar la atención de tu audiencia y construir una conexión auténtica.
+                Nuestra propuesta está diseñada para ofrecerte contenido dinámico y de vanguardia, impulsando el crecimiento de tu marca.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+                <div class="kpi-box">
+                    <div class="kpi-number">15</div>
+                    <div class="kpi-label">Reels Semanales</div>
+                    <p class="text-sm text-gray-600 mt-2">Contenido fresco y constante para mantener a tu audiencia enganchada.</p>
+                </div>
+                <div class="kpi-box">
+                    <div class="kpi-number">60</div>
+                    <div class="kpi-label">Reels al Mes</div>
+                    <p class="text-sm text-gray-600 mt-2">Un volumen estratégico para una presencia impactante y efectiva en Instagram.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Nuestro Compromiso de Calidad -->
+        <div class="card">
+            <h2>Nuestro Compromiso de Calidad</h2>
+            <p class="section-intro">
+                Nos dedicamos a crear Reels que no solo sean visualmente atractivos, sino que también reflejen la esencia de tu marca y las últimas tendencias.
+                Así es como garantizamos la excelencia en cada video:
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10 items-center">
+                <div>
+                    <h3>Detalles del Servicio Excepcional:</h3>
+                    <ul class="list-disc pl-5 text-gray-700">
+                        <li class="mb-2"><strong>Edición Profesional de Alto Nivel:</strong> Replicamos el estilo dinámico de "invictos_tm" con transiciones, textos y efectos.</li>
+                        <li class="mb-2"><strong>Selección Musical Estratégica:</strong> Música licenciada o en tendencia para potenciar el mensaje de cada Reel.</li>
+                        <li class="mb-2"><strong>Investigación de Tendencias Constante:</strong> Aseguramos que tu contenido esté siempre a la vanguardia.</li>
+                        <li class="mb-2"><strong>Gestión Eficiente de Recursos:</strong> Optimizamos la producción utilizando el material que nos proporcionas.</li>
+                        <li class="mb-2"><strong>Revisiones Detalladas:</strong> Hasta 2 rondas de ajustes por video para tu total satisfacción.</li>
+                    </ul>
+                </div>
+                <div class="chart-container">
+                    <h3>Distribución de Valor en el Servicio</h3>
+                    <canvas id="serviceValueChart"></canvas>
+                    <p class="text-center text-sm text-gray-600 mt-2">
+                        Esta visualización ilustra el enfoque y la distribución de nuestro esfuerzo, destacando el valor en cada aspecto del servicio.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Tu Inversión, Tu Retorno -->
+        <div class="card">
+            <h2>Tu Inversión, Tu Retorno</h2>
+            <p class="section-intro">
+                Hemos estructurado una oferta competitiva que reconoce el valor del volumen y nuestro compromiso a largo plazo con tu éxito.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10 items-center">
+                <div>
+                    <h3>Análisis de Costo por Reel</h3>
+                    <ul class="list-disc pl-5 text-gray-700 mb-6">
+                        <li class="mb-2"><strong>Precio por Reel (estándar):</strong> <span class="font-bold text-lg text-blue-600">$15 USD</span></li>
+                        <li class="mb-2"><strong>Descuento por Volumen (Mensual):</strong> <span class="font-bold text-lg text-green-600">10% de descuento</span> sobre el total por 60 reels/mes.</li>
+                    </ul>
+                    <div class="bg-blue-50 p-6 rounded-lg text-center shadow-inner">
+                        <p class="text-lg text-gray-800">
+                            <strong>Precio Total Mensual (con descuento):</strong>
+                        </p>
+                        <p class="text-5xl font-extrabold text-blue-700 my-2">$810 USD</p>
+                        <p class="text-sm text-gray-600">(Un costo de <span class="font-bold">$13.50 USD por reel</span>)</p>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3>Comparación: Precio Estándar vs. Precio con Descuento</h3>
+                    <canvas id="priceComparisonChart"></canvas>
+                    <p class="text-center text-sm text-gray-600 mt-2">
+                        El gráfico muestra el ahorro significativo al optar por el plan mensual, maximizando el valor de su inversión.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Tu Proceso, Nuestra Alianza -->
+        <div class="card">
+            <h2>Tu Proceso, Nuestra Alianza</h2>
+            <p class="section-intro">
+                Nuestra colaboración se basa en un flujo de trabajo claro y eficiente, diseñado para garantizar entregas puntuales y resultados excepcionales.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
+                <div class="flow-step">
+                    <span class="text-4xl">📥</span>
+                    <h3 class="flow-text mt-3">1. Envío de Recursos</h3>
+                    <p class="text-sm text-gray-600">Nos proporcionas videos, imágenes, guiones e ideas.</p>
+                </div>
+                <div class="flow-arrow hidden lg:flex items-center justify-center">
+                    <span>➡️</span>
+                </div>
+                <div class="flow-step">
+                    <span class="text-4xl">💡</span>
+                    <h3 class="flow-text mt-3">2. Investigación & Creatividad</h3>
+                    <p class="text-sm text-gray-600">Aplicamos tendencias y un enfoque innovador.</p>
+                </div>
+                <div class="flow-arrow hidden lg:flex items-center justify-center">
+                    <span>➡️</span>
+                </div>
+                <div class="flow-step">
+                    <span class="text-4xl">🎥</span>
+                    <h3 class="flow-text mt-3">3. Edición & Entrega</h3>
+                    <p class="text-sm text-gray-600">Producimos los Reels y los entregamos en lotes semanales.</p>
+                </div>
+                <div class="flow-arrow hidden lg:flex items-center justify-center">
+                    <span>➡️</span>
+                </div>
+                <div class="flow-step">
+                    <span class="text-4xl">👍</span>
+                    <h3 class="flow-text mt-3">4. Feedback & Ajustes</h3>
+                    <p class="text-sm text-gray-600">Recibimos tu feedback y realizamos las revisiones necesarias.</p>
+                </div>
+            </div>
+            <p class="text-center text-sm text-gray-600 mt-6">
+                Este flujo optimizado asegura una producción constante de contenido de alta calidad para su marca.
+            </p>
+        </div>
+
+        <!-- Section 5: Hablemos del Futuro -->
+        <div class="card">
+            <h2>Hablemos del Futuro</h2>
+            <p class="section-intro">
+                Estamos listos para comenzar a transformar su presencia en Instagram. Aquí los próximos pasos y consideraciones clave:
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+                <div>
+                    <h3>Próximos Pasos Sugeridos:</h3>
+                    <ul class="list-disc pl-5 text-gray-700">
+                        <li class="mb-2">¿Desea un <strong>reel de prueba</strong> sin costo? Permítanos demostrarle nuestro estilo "invictos_tm" con su material.</li>
+                        <li class="mb-2">Estamos listos para coordinar el <strong>envío de los primeros recursos</strong>. ¿Qué día le viene mejor iniciar?</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Términos y Condiciones Generales:</h3>
+                    <ul class="list-disc pl-5 text-gray-700">
+                        <li class="mb-2"><strong>Pago:</strong> Semanal. Los pagos se efectuarán cada domingo al inicio de cada ciclo semanal de producción, cubriendo los servicios de la semana en curso.</li>
+                        <li class="mb-2"><strong>Revisiones:</strong> Incluidas 2 rondas de ajustes por reel.</li>
+                        <li class="mb-2"><strong>Material Fuente:</strong> Proporcionado por el cliente en formato utilizable.</li>
+                        <li class="mb-2"><strong>Confidencialidad:</strong> Toda la información compartida será tratada con estricta confidencialidad.</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="text-center text-lg font-semibold text-gray-800 mt-10">
+                ¡Estamos emocionados de colaborar con usted y llevar sus Reels de Instagram al siguiente nivel!
+            </p>
+        </div>
+
+        <div class="footer-info text-center text-sm text-gray-600 mt-10">
+            <p><strong>Atentamente,</strong></p>
+            <p>Jeffry Andres Fuentes Avila</p>
+            <p>Editor de videos</p>
+            <p>+57 3006493668</p>
+            <p>jeffry.editor06@gmail.com</p>
+        </div>
+    </div>
+
+    <script>
+        // Function to wrap long labels
+        function wrapLabel(label) {
+            if (label.length <= 16) {
+                return label;
+            }
+            const words = label.split(' ');
+            let lines = [];
+            let currentLine = '';
+            words.forEach(word => {
+                if ((currentLine + word).length <= 16) {
+                    currentLine += (currentLine === '' ? '' : ' ') + word;
+                } else {
+                    lines.push(currentLine);
+                    currentLine = word;
+                }
+            });
+            if (currentLine !== '') {
+                lines.push(currentLine);
+            }
+            return lines;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Chart 1: Service Value Distribution (Donut Chart)
+            const serviceValueCtx = document.getElementById('serviceValueChart').getContext('2d');
+            const serviceValueChart = new Chart(serviceValueCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: [
+                        wrapLabel('Edición Profesional'),
+                        wrapLabel('Investigación de Tendencias'),
+                        wrapLabel('Selección Musical'),
+                        wrapLabel('Gestión de Recursos'),
+                        wrapLabel('Revisiones')
+                    ],
+                    datasets: [{
+                        data: [40, 25, 15, 10, 10], // Representative values of effort/value
+                        backgroundColor: [
+                            '#3498DB', // Vibrant Blue
+                            '#2ECC71', // Green (Complementary)
+                            '#E74C3C', // Red (Complementary)
+                            '#F39C12', // Orange (Complementary)
+                            '#9B59B6'  // Purple (Complementary)
+                        ],
+                        hoverOffset: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                color: '#2C3E50',
+                                font: {
+                                    size: 14,
+                                    family: 'Inter'
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: function(tooltipItems) {
+                                    const item = tooltipItems[0];
+                                    let label = item.chart.data.labels[item.dataIndex];
+                                    if (Array.isArray(label)) {
+                                        return label.join(' ');
+                                    } else {
+                                        return label;
+                                    }
+                                },
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (Array.isArray(label)) {
+                                        label = label.join(' ');
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += ': ' + context.parsed + '%';
+                                    }
+                                    return label;
+                                }
+                            },
+                            bodyFont: {
+                                family: 'Inter'
+                            },
+                            titleFont: {
+                                family: 'Inter'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Chart 2: Price Comparison: Standard vs. Discounted (Bar Chart)
+            const priceComparisonCtx = document.getElementById('priceComparisonChart').getContext('2d');
+            const priceComparisonChart = new Chart(priceComparisonCtx, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        wrapLabel('Precio Estándar por Reel'),
+                        wrapLabel('Precio con Descuento por Reel')
+                    ],
+                    datasets: [{
+                        label: 'Precio por Reel (USD)',
+                        data: [15, 13.50],
+                        backgroundColor: [
+                            '#E74C3C', // Red for standard price
+                            '#2ECC71'  // Green for discounted price
+                        ],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'USD',
+                                color: '#2C3E50',
+                                font: {
+                                    size: 14,
+                                    family: 'Inter'
+                                }
+                            },
+                            ticks: {
+                                color: '#2C3E50',
+                                font: {
+                                    family: 'Inter'
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#2C3E50',
+                                font: {
+                                    family: 'Inter'
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: function(tooltipItems) {
+                                    const item = tooltipItems[0];
+                                    let label = item.chart.data.labels[item.dataIndex];
+                                    if (Array.isArray(label)) {
+                                        return label.join(' ');
+                                    } else {
+                                        return label;
+                                    }
+                                },
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    label += '$' + context.parsed.y.toFixed(2);
+                                    return label;
+                                }
+                            },
+                            bodyFont: {
+                                family: 'Inter'
+                            },
+                            titleFont: {
+                                family: 'Inter'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
